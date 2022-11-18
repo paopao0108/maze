@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  width: 100vw;
+  margin: 20px auto;
+  position: relative;
+}
+.map {
+  background-color: #fff;
+}
+.map td {
+  width: 20px;
+  height: 20px;
+  background-color: pink;
+}
+.map td.wall {
+  background-color: gray;
+}
+.player {
+  width: 20px;
+  height: 20px;
+  background-color: green;
+  position: absolute;
+}
