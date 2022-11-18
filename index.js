@@ -1,19 +1,44 @@
 const player = document.querySelector('.player');
 
-const row = 10;
-const col = 10;
+const sizeBtn = document.querySelector('#sizeBtn');
+const table = document.querySelector('table');
+
+let size = parseInt(sizeBtn.options[sizeBtn.selectedIndex].value);
+
+let row = size;
+let col = row;
 const gridSize = 20;
 
 // 绘制迷宫
 let [startX, startY] = [1, 0];
 let [endX, endY] = [2 * col - 1, 2 * col];
-let maze = new Maze(row, row, [startX, startY], [endX, endY]);
+let maze = new Maze(row, col, [startX, startY], [endX, endY]);
 maze.generate();
 
-const mazeDataArray = maze.mazeDataArray;
+let mazeDataArray = maze.mazeDataArray;
 maze.drawDom();
+
 player.style.top = gridSize * startX + 'px';
 player.style.left = gridSize * startY + 'px';
+
+// 监听size改变事件
+sizeBtn.addEventListener('change', function (e) {
+  this.blur(); // 控制下拉框失去焦点，防止切换下拉选项
+  maze = null; // 置空
+  table.innerHTML = null;
+
+  size = parseInt(sizeBtn.options[sizeBtn.selectedIndex].value);
+  [row, col] = [size, size];
+
+  [endX, endY] = [2 * col - 1, 2 * col];
+  maze = new Maze(row, col, [startX, startY], [endX, endY]);
+  maze.generate();
+  mazeDataArray = maze.mazeDataArray;
+  maze.drawDom();
+
+  player.style.top = gridSize * startX + 'px';
+  player.style.left = gridSize * startY + 'px';
+});
 
 const keys = [];
 document.addEventListener('keydown', e => {
